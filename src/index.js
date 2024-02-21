@@ -6,6 +6,8 @@ import NotFound from "./pages/NotFound";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
 import Posts from "./pages/Posts";
+import New from "./pages/New";
+import Edit from "./pages/Edit";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +20,9 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
-      { path: "/posts", element: <Posts /> },
+      { path: "/new", element: <New /> },
+      { path: "/posts/:id", element: <Posts /> },
+      { path: "/edit/:id", element: <Edit /> },
     ],
   },
 ]);
