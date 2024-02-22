@@ -1,20 +1,22 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import Banner from "../components/Banner";
-import { PostStateContext } from "../App";
-import PostList from "../components/PostList";
+import Post from "../components/Post";
+// import { PostStateContext } from "../App";
+// import PostList from "../components/PostList";
 
 export default function Home() {
-  const postList = useContext(PostStateContext);
-  const [data, setData] = useState([]);
+  // const postList = useContext(PostStateContext);
+  // const [data, setData] = useState([]);
 
-  useEffect(() => {
-    setData(postList);
-  }, [data, postList]);
+  // useEffect(() => {
+  //   setData(postList);
+  // }, [data, postList]);
 
   return (
-    <div>
+    <div className="mt-20">
       <Banner />
-      <PostList postList={data} />
+      <Post />
+      {/* <PostList postList={data} /> */}
     </div>
   );
 }
