@@ -8,10 +8,6 @@ export default function New() {
   const [post, setPost] = useState({});
   const [file, setFile] = useState();
   const [isUploading, setIsUploading] = useState(false);
-  // const [success, setSuccess] = useState();
-  // const [title, setTitle] = useState("");
-  // const [content, setContent] = useState("");
-  //달력
 
   const navigate = useNavigate();
 
@@ -23,12 +19,7 @@ export default function New() {
       .then((url) => {
         // console.log(url);
         //firebase에 새 사진파일 추가
-        addPost(post, url); //
-        //   .then(() => setSuccess("성공적으로 게시되었습니다."));
-
-        // setTimeout(() => {
-        //   setSuccess(null);
-        // }, 2000);
+        addPost(post, url);
         navigate("/");
       })
       .finally(() => setIsUploading(false));
@@ -45,10 +36,6 @@ export default function New() {
   };
   return (
     <section className="w-full mt-40 md:mt-24">
-      {/* <h2 className="text-center font-semibold text-2xl mt-6 ">
-        새 포스트 작성
-      </h2> */}
-
       <form onSubmit={onSubmit} className="max-w-sm  mx-auto">
         <div className="backdrop-blur-sm md:bg-white flex justify-end md:justify-center mb-16 p-4 fixed top-[73px] right-0  w-[100%] md:w-[30%] z-5">
           <Button

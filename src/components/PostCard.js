@@ -20,7 +20,13 @@ export default function PostCard({
       />
 
       <div className="mt-4 md:ml-5 md:mt-0">
-        <div className="mb-3">{createdAt}</div>
+        <div className="mb-3">
+          {new Date(createdAt)?.toLocaleDateString("ko", {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          })}
+        </div>
         <h3 className="font-semibold">{title}</h3>
         <p className="mt-11 font-thin line-clamp-1">{content.slice(0, 24)}</p>
       </div>

@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { get, getDatabase, ref, set } from "firebase/database";
+import { get, getDatabase, ref, remove, set } from "firebase/database";
 import { v4 as uuidv4 } from "uuid";
 
 const firebaseConfig = {
@@ -15,16 +15,14 @@ const database = getDatabase(app);
 // 쓸때는 set
 export async function addPost(post, image) {
   const id = uuidv4();
+  const now = new Date();
+  const date = now.toISOString();
   return set(ref(database, `posts/${id}`), {
     ...post,
     id,
     image,
     title: post.title,
-    createdAt: new Date()?.toLocaleDateString("ko", {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    }),
+    createdAt: date,
     content: post.content,
   });
 }
@@ -41,3 +39,6 @@ export async function getPost() {
 }
 
 //삭제
+export async function removePost(id) {
+  return remove(ref(database, `posts/${id}`));
+}

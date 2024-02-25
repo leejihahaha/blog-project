@@ -43,9 +43,13 @@ export default function Post() {
   const getProcessedPostList = () => {
     const compare = (a, b) => {
       if (sortType === "latest") {
-        return parseInt(b.createdAt) - parseInt(a.createdAt);
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
       } else {
-        return parseInt(a.createdAt) - parseInt(b.createdAt);
+        return (
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        );
       }
     };
     const copyList = JSON.parse(JSON.stringify(posts));
@@ -61,11 +65,13 @@ export default function Post() {
         </p>
       )}
       {error && <p>{error}</p>}
-      <ControlMenu
-        value={sortType}
-        onChange={setSortType}
-        optionList={sortOptionList}
-      />
+      <div className="flex justify-center ">
+        <ControlMenu
+          value={sortType}
+          onChange={setSortType}
+          optionList={sortOptionList}
+        />
+      </div>
       <ul className="flex flex-col items-center">
         {posts &&
           getProcessedPostList().map((post) => (

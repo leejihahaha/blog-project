@@ -5,13 +5,6 @@ import Post from "../components/Post";
 // import PostList from "../components/PostList";
 
 export default function Home() {
-  // const postList = useContext(PostStateContext);
-  // const [data, setData] = useState([]);
-
-  // useEffect(() => {
-  //   setData(postList);
-  // }, [data, postList]);
-
   return (
     <div className="mt-20">
       <Banner />
