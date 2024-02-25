@@ -39,3 +39,5 @@ export async function getPost() {
     return [];
   });
 }
+
+//삭제

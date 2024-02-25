@@ -43,9 +43,9 @@ export default function Post() {
   const getProcessedPostList = () => {
     const compare = (a, b) => {
       if (sortType === "latest") {
-        return parseInt(b.postNumber) - parseInt(a.postNumber);
+        return parseInt(b.createdAt) - parseInt(a.createdAt);
       } else {
-        return parseInt(a.postNumber) - parseInt(b.postNumber);
+        return parseInt(a.createdAt) - parseInt(b.createdAt);
       }
     };
     const copyList = JSON.parse(JSON.stringify(posts));
