@@ -36,10 +36,6 @@ export default function Post() {
     queryFn: getPost,
   });
 
-  // useEffect(() => {
-  //   console.log(posts);
-  // }, [posts]);
-
   const getProcessedPostList = () => {
     const compare = (a, b) => {
       if (sortType === "latest") {

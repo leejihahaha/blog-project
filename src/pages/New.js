@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../components/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useRouteError } from "react-router-dom";
 import { uploadImage } from "../api/uploader";
-import { addPost } from "../api/firebase";
+import { addPost, database, getPost } from "../api/firebase";
+import { useQuery } from "@tanstack/react-query";
+import { ref, update } from "firebase/database";
+import { dblClick } from "@testing-library/user-event/dist/click";
 
 export default function New() {
   const [post, setPost] = useState({});
+  const [isEdit, setIsEdit] = useState(false);
   const [file, setFile] = useState();
   const [isUploading, setIsUploading] = useState(false);
-
   const navigate = useNavigate();
+  const { id } = useParams();
+  console.log(id);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -55,11 +60,6 @@ export default function New() {
           )}
         </div>
         <div>
-          {/* {success && (
-            <p className="flex h-7 justify-center my-2 bg-sky-700  text-white items-center">
-              🤗{success}
-            </p>
-          )} */}
           <label
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-5 md:mt-10"
             htmlFor="file_input"
@@ -86,7 +86,7 @@ export default function New() {
             id="title"
             required
             onChange={onChange}
-            value={post.title ?? ""}
+            value={post.title || ""}
           />
         </div>
 
@@ -100,7 +100,7 @@ export default function New() {
             id="content"
             required
             onChange={onChange}
-            value={post.content ?? ""}
+            value={post.content || ""}
           />
         </div>
       </form>

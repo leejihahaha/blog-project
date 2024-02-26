@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { get, getDatabase, ref, remove, set } from "firebase/database";
+import { get, getDatabase, ref, remove, set, update } from "firebase/database";
 import { v4 as uuidv4 } from "uuid";
 
 const firebaseConfig = {
@@ -10,7 +10,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
+export const database = getDatabase(app);
 
 // 쓸때는 set
 export async function addPost(post, image) {
@@ -35,6 +35,20 @@ export async function getPost() {
     }
     //snapshop이 없으면 빈배열 리턴
     return [];
+  });
+}
+
+//업데이트
+export async function updatePost(post, id) {
+  const { image, title, content } = post;
+  const now = new Date();
+  const date = now.toISOString();
+  return update(ref(database, `posts/edit/${id}`), {
+    ...post,
+    image,
+    title,
+    createdAt: date,
+    content,
   });
 }
 

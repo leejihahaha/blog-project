@@ -1,22 +1,27 @@
 import React from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
+import { removePost } from "../api/firebase";
 
 export default function PostsDetail() {
+  const navigate = useNavigate();
   const {
     state: {
       post: { id, image, title, content, createdAt },
     },
   } = useLocation();
 
-  // const handleDelete = async () => {
-  //   const confirm = window.confirm("해당 게시글을 삭제하시겠습니까?");
-  //   if (confirm && post && post.id) {
-  //     await deleteDoc(doc(db, "posts", post.id));
-  //     toast.success("게시글을 삭제했습니다.");
-  //     Navigate("/");
-  //   }
-  // };
+  //edit페이지로 넘어가기
+  const handleGoEdit = () => {
+    navigate(`/posts/edit/${id}`);
+  };
+
+  const handleDelete = () => {
+    if (window.confirm("정말 삭제하시겠습니까")) {
+      removePost(id);
+      navigate("/", { replace: true });
+    }
+  };
 
   return (
     <section className="mt-28">
@@ -28,8 +33,8 @@ export default function PostsDetail() {
         />
 
         <div className="mt-7">
-          <Button text={"삭제"} color={"red"} />
-          <Button text={"수정"} />
+          <Button text={"삭제"} color={"red"} onClick={handleDelete} />
+          <Button text={"수정"} onClick={handleGoEdit} />
         </div>
         <p className="mt-10">
           {new Date(createdAt)?.toLocaleDateString("ko", {
