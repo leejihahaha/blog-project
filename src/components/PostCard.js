@@ -11,7 +11,7 @@ export default function PostCard({
       onClick={() => {
         navigate(`/posts/${id}`, { state: { post } });
       }}
-      className="shadow-xl md:flex md:w-[40%] items-start cursor-pointer content-center mt-10 p-3 border rounded-xl border-gray-400 transition-all hover:scale-105"
+      className="shadow-xl md:flex w-[80%] md:w-[40%] items-start cursor-pointer content-center mt-10 p-3 border rounded-xl border-gray-400 transition-all hover:scale-105"
     >
       <img
         className="rounded-xl w-[350px] h-[300px] md:w-[250px] md:h-[200px]"
@@ -19,8 +19,8 @@ export default function PostCard({
         alt={title}
       />
 
-      <div className="mt-4 md:ml-5 md:mt-0">
-        <div className="mb-3">
+      <div className="mt-4 md:ml-5 md:mt-0 overflow-hidden text-center md:text-start">
+        <div className="mb-3 ">
           {new Date(createdAt)?.toLocaleDateString("ko", {
             hour: "2-digit",
             minute: "2-digit",
@@ -28,7 +28,7 @@ export default function PostCard({
           })}
         </div>
         <h3 className="font-semibold">{title}</h3>
-        <p className="mt-11 font-thin line-clamp-1">{content.slice(0, 24)}</p>
+        <p className="mt-5 font-normal">{content.slice(0, 25)}</p>
       </div>
     </li>
   );

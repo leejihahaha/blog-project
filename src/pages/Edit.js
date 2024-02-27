@@ -1,31 +1,25 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { getPost } from "../api/firebase";
+import { useParams } from "react-router-dom";
+import { getPostId } from "../api/firebase";
 import New from "./New";
 
 export default function Edit() {
-  // const navigate = useNavigate();
-  // const [originData, setOriginData] = useState();
-  // const { id } = useParams();
-  // const { data: posts } = useQuery({
-  //   queryKey: ["posts"],
-  //   queryFn: getPost,
-  // });
-  // console.log(id);
-  // console.log(posts);
+  const { id } = useParams();
+  const [originData, setOriginData] = useState();
 
-  //수정하려는 포스트 찾기!
-  // useEffect(() => {
-  //   const targetPost = posts.find((it) => parseInt(it.id) === parseInt(id));
-  //   // console.log(targetPost);
+  const { data: posts } = useQuery({
+    queryKey: ["posts", id],
+    queryFn: () => getPostId(id),
+  });
 
-  //   if (targetPost) {
-  //     setOriginData(targetPost);
-  //   } else {
-  //     navigate("/", { replace: true });
-  //   }
-  // }, [id, posts]);
+  useEffect(() => {
+    if (posts) {
+      setOriginData(posts);
+    }
+  }, [id, posts]);
 
-  return <div>{/* <New isEdit={true} /> */}</div>;
+  return (
+    <div>{originData && <New isEdit={true} originData={originData} />}</div>
+  );
 }

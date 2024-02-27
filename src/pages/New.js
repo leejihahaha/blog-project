@@ -1,20 +1,27 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useEffect, useState } from "react";
 import { Button } from "../components/Button";
-import { useNavigate, useParams, useRouteError } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { uploadImage } from "../api/uploader";
-import { addPost, database, getPost } from "../api/firebase";
-import { useQuery } from "@tanstack/react-query";
-import { ref, update } from "firebase/database";
-import { dblClick } from "@testing-library/user-event/dist/click";
+import { addPost, updatePost } from "../api/firebase";
 
-export default function New() {
-  const [post, setPost] = useState({});
-  const [isEdit, setIsEdit] = useState(false);
+export default function New({ isEdit, originData }) {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
   const [file, setFile] = useState();
   const [isUploading, setIsUploading] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
   console.log(id);
+  // console.log(content);
+
+  useEffect(() => {
+    if (isEdit) {
+      setTitle(originData.title);
+      setContent(originData.content);
+      setFile(originData.image);
+    }
+  }, [isEdit, originData]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -24,8 +31,18 @@ export default function New() {
       .then((url) => {
         // console.log(url);
         //firebase에 새 사진파일 추가
-        addPost(post, url);
-        navigate("/");
+
+        if (isEdit) {
+          // 수정 모드일 때는 기존 포스트 업데이트
+          // updatePost 함수를 사용하도록 변경해야 함
+          updatePost(id, title, content, url).then(() => {
+            navigate("/", { replace: true });
+          });
+        } else {
+          addPost(id, title, content, url).then(() => {
+            navigate("/", { replace: true });
+          });
+        }
       })
       .finally(() => setIsUploading(false));
   };
@@ -37,27 +54,40 @@ export default function New() {
       return;
     }
 
-    setPost((post) => ({ ...post, [name]: value }));
+    if (name === "title") {
+      setTitle(value);
+    } else if (name === "content") {
+      setContent(value);
+    }
   };
   return (
     <section className="w-full mt-40 md:mt-24">
       <form onSubmit={onSubmit} className="max-w-sm  mx-auto">
         <div className="backdrop-blur-sm md:bg-white flex justify-end md:justify-center mb-16 p-4 fixed top-[73px] right-0  w-[100%] md:w-[30%] z-5">
           <Button
-            text={isUploading ? "게시중..." : "제출"}
+            text={isEdit ? "수정완료" : isUploading ? "게시중..." : "제출"}
             color={"blue"}
             size={"sm"}
             disabled={isUploading}
           />
         </div>
         <div className="mt-40">
-          {file && (
-            <img
-              className="w-96 mx-auto mt-10 md:mt-40"
-              src={URL.createObjectURL(file)}
-              alt="local file"
-            />
-          )}
+          {file &&
+            !isEdit && ( // isEdit가 false인 경우에만 새로운 파일 선택 입력란 아래에 미리 보여줌
+              <img
+                className="w-96 mx-auto mt-10 md:mt-40"
+                src={URL.createObjectURL(file)}
+                alt="local file"
+              />
+            )}
+          {isEdit &&
+            originData && ( // isEdit가 true이고 이전 데이터가 있는 경우에만 이전 이미지 데이터를 보여줌
+              <img
+                className="w-96 mx-auto mt-10 md:mt-40"
+                src={originData.image}
+                alt="previous image"
+              />
+            )}
         </div>
         <div>
           <label
@@ -72,6 +102,7 @@ export default function New() {
             accept="image/*"
             name="file"
             onChange={onChange}
+            required
           />
         </div>
 
@@ -86,7 +117,7 @@ export default function New() {
             id="title"
             required
             onChange={onChange}
-            value={post.title || ""}
+            value={title}
           />
         </div>
 
@@ -100,7 +131,7 @@ export default function New() {
             id="content"
             required
             onChange={onChange}
-            value={post.content || ""}
+            value={content}
           />
         </div>
       </form>

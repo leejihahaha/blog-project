@@ -13,7 +13,7 @@ const app = initializeApp(firebaseConfig);
 export const database = getDatabase(app);
 
 // 쓸때는 set
-export async function addPost(post, image) {
+export async function addPost(post, title, content, image) {
   const id = uuidv4();
   const now = new Date();
   const date = now.toISOString();
@@ -21,9 +21,21 @@ export async function addPost(post, image) {
     ...post,
     id,
     image,
-    title: post.title,
+    title,
     createdAt: date,
-    content: post.content,
+    content,
+  });
+}
+
+//업데이트
+export async function updatePost(id, title, content, image) {
+  const now = new Date();
+  const date = now.toISOString();
+  return update(ref(database, `posts/${id}`), {
+    title,
+    image,
+    content,
+    updatedAt: date,
   });
 }
 
@@ -38,17 +50,18 @@ export async function getPost() {
   });
 }
 
-//업데이트
-export async function updatePost(post, id) {
-  const { image, title, content } = post;
-  const now = new Date();
-  const date = now.toISOString();
-  return update(ref(database, `posts/edit/${id}`), {
-    ...post,
-    image,
-    title,
-    createdAt: date,
-    content,
+export async function getPostId(id) {
+  return get(ref(database, `posts/${id}`)).then((snapshot) => {
+    if (snapshot.exists()) {
+      const postData = snapshot.val();
+      if (postData && postData.image) {
+        // If the image property exists, add it to the postData object
+        return { ...postData, image: postData.image };
+      }
+      return postData;
+    }
+    // snapshot이 없으면 null 반환
+    return null;
   });
 }
 

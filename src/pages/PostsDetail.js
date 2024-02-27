@@ -11,6 +11,8 @@ export default function PostsDetail() {
     },
   } = useLocation();
 
+  console.log(`${id}번 포스트입니다`);
+
   //edit페이지로 넘어가기
   const handleGoEdit = () => {
     navigate(`/posts/edit/${id}`);
@@ -24,8 +26,8 @@ export default function PostsDetail() {
   };
 
   return (
-    <section className="mt-28">
-      <div className="flex flex-col items-center px-[20px] md:px-[35%]">
+    <section className="mt-28 px-10 md:px-[20%]">
+      <div className="flex flex-col items-center text-center  px-[20px] md:px-[35%]">
         <img
           className="rounded-xl md:w-auto md:h-auto"
           src={image}
@@ -45,7 +47,9 @@ export default function PostsDetail() {
         </p>
 
         <h2 className="mt-2">{title}</h2>
-        <p className="mt-6 font-light text-gray-500">{content}</p>
+        <div className="w-[120%] md:w-[200%]">
+          <p className="mt-6 font-light text-gray-500 mb-10">{content}</p>
+        </div>
       </div>
     </section>
   );
