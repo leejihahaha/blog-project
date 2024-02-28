@@ -11,7 +11,7 @@ export default function PostsDetail() {
     },
   } = useLocation();
 
-  console.log(`${id}번 포스트입니다`);
+  console.log(`${id}번 포스트입니다!`);
 
   //edit페이지로 넘어가기
   const handleGoEdit = () => {
@@ -26,15 +26,14 @@ export default function PostsDetail() {
   };
 
   return (
-    <section className="mt-28 px-10 md:px-[20%]">
-      <div className="flex flex-col items-center text-center  px-[20px] md:px-[35%]">
+    <section className="h-screen px-[5%] pb-40 pt-20 md:px-[40%] md:pt-40  dark:text-gray-100 dark:bg-slate-800">
+      <div className="flex flex-col items-center text-center">
         <img
           className="rounded-xl md:w-auto md:h-auto"
           src={image}
           alt={title}
         />
-
-        <div className="mt-7">
+        <div className="mt-7 flex gap-[200px]">
           <Button text={"삭제"} color={"red"} onClick={handleDelete} />
           <Button text={"수정"} onClick={handleGoEdit} />
         </div>
@@ -47,8 +46,8 @@ export default function PostsDetail() {
         </p>
 
         <h2 className="mt-2">{title}</h2>
-        <div className="w-[120%] md:w-[200%]">
-          <p className="mt-6 font-light text-gray-500 mb-10">{content}</p>
+        <div className="mt-10 w-[120%] md:w-[200%]">
+          <p className="font-medium dark:text-white text-black">{content}</p>
         </div>
       </div>
     </section>

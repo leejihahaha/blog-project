@@ -55,7 +55,6 @@ export async function getPostId(id) {
     if (snapshot.exists()) {
       const postData = snapshot.val();
       if (postData && postData.image) {
-        // If the image property exists, add it to the postData object
         return { ...postData, image: postData.image };
       }
       return postData;

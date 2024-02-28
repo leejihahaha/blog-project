@@ -9,7 +9,7 @@ export default function PostCard({
   return (
     <li
       onClick={() => {
-        navigate(`/posts/${id}`, { state: { post } });
+        navigate(`/posts/${id}`, { state: { post: post } });
       }}
       className="shadow-xl md:flex w-[80%] md:w-[40%] items-start cursor-pointer content-center mt-10 p-3 border rounded-xl border-gray-400 transition-all hover:scale-105"
     >

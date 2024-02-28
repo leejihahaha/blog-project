@@ -5,12 +5,12 @@ import App from "./App";
 import NotFound from "./pages/NotFound";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
-import AllPosts from "./pages/AllPosts";
+import Post from "./pages/AllPosts";
 import New from "./pages/New";
 import Edit from "./pages/Edit";
 import PostsDetail from "./pages/PostsDetail";
-
-const router = createBrowserRouter([
+const basename = process.env.PUBLIC_URL;
+const routes = [
   {
     path: "/",
     element: <App />,
@@ -18,16 +18,16 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        path: "/",
         element: <Home />,
       },
-      { path: "/posts", element: <AllPosts /> },
-      { path: "/posts/:id", element: <PostsDetail /> },
+      { path: "/posts", element: <Post /> },
       { path: "/new", element: <New /> },
       { path: "/posts/edit/:id", element: <Edit /> },
+      { path: "/posts/:id", element: <PostsDetail /> },
     ],
   },
-]);
+];
+const router = createBrowserRouter(routes, { basename: basename });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

@@ -54,14 +54,14 @@ export default function Post() {
   };
 
   return (
-    <>
+    <section className="pt-10 pb-[50%] ">
       {isPending && (
         <p className="flex font-semibold justify-center items-center pb-5">
           Loading...
         </p>
       )}
       {error && <p>{error}</p>}
-      <div className="flex justify-center ">
+      <div className="flex justify-center">
         <ControlMenu
           value={sortType}
           onChange={setSortType}
@@ -74,6 +74,6 @@ export default function Post() {
             <PostCard key={post.id} post={post} />
           ))}
       </ul>
-    </>
+    </section>
   );
 }

@@ -1,15 +1,20 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import { MdDarkMode } from "react-icons/md";
+import { IoMdSunny } from "react-icons/io";
+import { useDarkMode } from "../context/DarkModeContext";
 
 export default function Navbar() {
+  const { darkMode, toggleDarkMode } = useDarkMode();
+
   const navItem = [
     { path: "/", link: "홈" },
     { path: "/posts", link: "전체" },
     { path: "/new", link: "글쓰기" },
   ];
-  // backdrop-blur-sm
+
   return (
-    <header className="border-b border-gray-200 fixed top-0 left-0 right-0 z-10  bg-white backdrop-blur-sm md:backdrop-blur-sm">
+    <header className="border-b border-gray-200 fixed top-0 left-0 right-0 z-10  bg-white backdrop-blur-sm md:backdrop-blur-sm  dark:text-gray-100 dark:bg-slate-800 duration-100">
       <nav className="flex justify-between p-5">
         <Link to="/" className="flex items-center text-2xl font-semibold">
           <h3>My Blog</h3>
@@ -29,12 +34,10 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
-        <div>☀</div>
-        {/* <nav className="flex items-center gap-4 font-semibold ">
-        <Link to="/">홈</Link>
-        <Link to="/posts">전체글</Link>
-        <div>☀</div>
-      </nav> */}
+        <button className="flex items-center text-xl" onClick={toggleDarkMode}>
+          {!darkMode && <MdDarkMode />}
+          {darkMode && <IoMdSunny />}
+        </button>
       </nav>
     </header>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 
 export const colors = {
-  blue: "bg-sky-950",
+  blue: "bg-sky-600",
   red: "bg-red-400",
   default: "bg-gray-500",
 };
@@ -24,11 +24,3 @@ export function Button({ text, color, size, onClick }) {
     </button>
   );
 }
-
-// <Button color={"blue"} text={"완료"} onClick={() => alert("버튼클릭")} />
-// <Button color={"red"} text={"삭제"} onClick={() => alert("버튼클릭")} />
-// <Button
-//   color={"default"}
-//   text={"뒤로가기"}
-//   onClick={() => alert("버튼클릭")}
-// />
