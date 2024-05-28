@@ -17,7 +17,7 @@ export default function Navbar() {
     <header className="border-b border-gray-200 fixed top-0 left-0 right-0 z-10  bg-white backdrop-blur-sm md:backdrop-blur-sm  dark:text-gray-100 dark:bg-slate-800 duration-100">
       <nav className="flex justify-between p-5">
         <Link to="/" className="flex items-center text-2xl font-semibold">
-          <h3>My Blog</h3>
+          <h3>My Record</h3>
         </Link>
 
         <ul className="flex justify-between items-center font-semibold gap-11">

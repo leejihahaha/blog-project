@@ -11,7 +11,7 @@ export default function PostsDetail() {
     },
   } = useLocation();
 
-  console.log(`${id}번 포스트입니다!`);
+  // console.log(`${id}번 포스트입니다!`);
 
   //edit페이지로 넘어가기
   const handleGoEdit = () => {

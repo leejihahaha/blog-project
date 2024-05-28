@@ -9,6 +9,7 @@ import Post from "./pages/AllPosts";
 import New from "./pages/New";
 import Edit from "./pages/Edit";
 import PostsDetail from "./pages/PostsDetail";
+
 const basename = process.env.PUBLIC_URL;
 const routes = [
   {

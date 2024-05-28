@@ -54,7 +54,7 @@ export default function Post() {
   };
 
   return (
-    <section className="pt-10 pb-[50%] ">
+    <section className="pt-10 pb-[20px] ">
       {isPending && (
         <p className="flex font-semibold justify-center items-center pb-5">
           Loading...

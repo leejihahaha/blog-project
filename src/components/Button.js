@@ -1,6 +1,6 @@
 import React from "react";
 
-export const colors = {
+const colors = {
   blue: "bg-sky-600",
   red: "bg-red-400",
   default: "bg-gray-500",

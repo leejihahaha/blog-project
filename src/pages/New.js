@@ -27,7 +27,7 @@ export default function New({ isEdit, originData }) {
     setIsUploading(true);
     // 이미지 파일이 선택되었는지 확인
     if (file) {
-      // 제품 사진을 클라우드에 업로드하고 URL 획득
+      //사진을 클라우드에 업로드하고 URL 획득
       uploadImage(file)
         .then((url) => {
           // Firebase에 새 사진 파일 추가
@@ -44,7 +44,7 @@ export default function New({ isEdit, originData }) {
         })
         .finally(() => setIsUploading(false));
     } else {
-      // 이미지가 선택되지 않은 경우, 이미지를 업로드하지 않고 나머지 정보만으로 게시물 추가 또는 업데이트
+      //  수정 모드에서 이미지를 변경하지 않은 경우, 기존 이미지를 계속 사용
       if (isEdit) {
         updatePost(id, title, content, originData.image || "").then(() => {
           navigate("/", { replace: true });
@@ -57,6 +57,7 @@ export default function New({ isEdit, originData }) {
     }
   };
 
+  //파일선택시
   const onChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "file") {
@@ -82,22 +83,22 @@ export default function New({ isEdit, originData }) {
           />
         </div>
         <div className="mt-40">
-          {file &&
-            !isEdit && ( // isEdit가 false인 경우에만 새로운 파일 선택 입력란 아래에 미리 보여줌
-              <img
-                className="w-96 mx-auto mt-10 md:mt-40"
-                src={URL.createObjectURL(file)}
-                alt="local file"
-              />
-            )}
-          {isEdit &&
+          {file ? ( // isEdit가 false인 경우에만 새로운 파일 선택 입력란 아래에 미리 보여줌
+            <img
+              className="w-96 mx-auto mt-10 md:mt-40"
+              src={typeof file === "string" ? file : URL.createObjectURL(file)}
+              alt="local file"
+            />
+          ) : (
+            isEdit &&
             originData && ( // isEdit가 true이고 이전 데이터가 있는 경우에만 이전 이미지 데이터를 보여줌
               <img
                 className="w-96 mx-auto mt-10 md:mt-40"
                 src={originData.image}
-                alt=""
+                alt="original"
               />
-            )}
+            )
+          )}
         </div>
         <div>
           <label
