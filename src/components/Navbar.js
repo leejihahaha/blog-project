@@ -9,7 +9,7 @@ export default function Navbar() {
 
   const navItem = [
     { path: "/", link: "홈" },
-    { path: "/posts", link: "전체" },
+    // { path: "/posts", link: "전체" },
     { path: "/new", link: "글쓰기" },
   ];
 
