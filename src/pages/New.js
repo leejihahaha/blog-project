@@ -25,11 +25,13 @@ export default function New({ isEdit, originData }) {
   const onSubmit = (e) => {
     e.preventDefault();
     setIsUploading(true);
-    // 이미지 파일이 선택되었는지 확인
+
     if (file) {
+      // 이미지 파일이 선택되었는지 확인, 있을 경우에만 실행
       //사진을 클라우드에 업로드하고 URL 획득
       uploadImage(file)
         .then((url) => {
+          //해당 URL을 사용하여 Firebase에 새로운 게시물을 추가하거나 기존 게시물을 업데이트
           // Firebase에 새 사진 파일 추가
           if (isEdit) {
             // 수정 모드일 때는 기존 포스트 업데이트
@@ -42,7 +44,10 @@ export default function New({ isEdit, originData }) {
             });
           }
         })
-        .finally(() => setIsUploading(false));
+        .finally(() => {
+          setIsUploading(false);
+          URL.revokeObjectURL(file);
+        });
     } else {
       //  수정 모드에서 이미지를 변경하지 않은 경우, 기존 이미지를 계속 사용
       if (isEdit) {

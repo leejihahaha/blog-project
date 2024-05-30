@@ -4,7 +4,7 @@ import Post from "../components/Post";
 
 export default function Home() {
   return (
-    <div className=" dark:text-gray-100 dark:bg-slate-800 duration-100">
+    <div className="min-h-screen dark:text-gray-100 dark:bg-slate-800 duration-100">
       <Banner />
       <Post />
     </div>
