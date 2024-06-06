@@ -5,7 +5,7 @@ import App from "./App";
 import NotFound from "./pages/NotFound";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
-import Post from "./pages/AllPosts";
+// import Post from "./pages/AllPosts";
 import New from "./pages/New";
 import Edit from "./pages/Edit";
 import PostsDetail from "./pages/PostsDetail";
@@ -21,7 +21,7 @@ const routes = [
         index: true,
         element: <Home />,
       },
-      { path: "/posts", element: <Post /> },
+      // { path: "/posts", element: <Post /> },
       { path: "/new", element: <New /> },
       { path: "/posts/edit/:id", element: <Edit /> },
       { path: "/posts/:id", element: <PostsDetail /> },

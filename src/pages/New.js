@@ -15,7 +15,7 @@ export default function New({ isEdit, originData }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isEdit) {
+    if (isEdit && originData) {
       setTitle(originData.title);
       setContent(originData.content);
       setFile(originData.image);
