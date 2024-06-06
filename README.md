@@ -2,4 +2,4 @@
 
 [회고 보러가기](https://www.notion.so/df87ce143c704a538487ddd1d0a8a01f)
 
-[데모 보러가기]()
+[데모 보러가기](https://leejihahaha.github.io/blog-project)
