@@ -1,11 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function PostCard({
-  post,
-  post: { id, image, title, content, createdAt },
-}) {
+const PostCard = React.memo(({ post }) => {
   const navigate = useNavigate();
+  const { id, image, title, content, createdAt } = post;
+
   return (
     <li
       onClick={() => {
@@ -32,4 +31,5 @@ export default function PostCard({
       </div>
     </li>
   );
-}
+});
+export default PostCard;

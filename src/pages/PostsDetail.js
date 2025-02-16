@@ -2,6 +2,7 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 import { removePost } from "../api/firebase";
+import { useAuthContext } from "../context/AuthContext";
 
 export default function PostsDetail() {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ export default function PostsDetail() {
       post: { id, image, title, content, createdAt },
     },
   } = useLocation();
+  const { user } = useAuthContext();
 
   // console.log(`${id}번 포스트입니다!`);
 
@@ -33,10 +35,12 @@ export default function PostsDetail() {
           src={image}
           alt={title}
         />
-        <div className="mt-7 flex gap-[200px]">
-          <Button text={"삭제"} color={"red"} onClick={handleDelete} />
-          <Button text={"수정"} onClick={handleGoEdit} />
-        </div>
+        {user?.isAdmin && (
+          <div className="mt-7 flex gap-[200px]">
+            <Button text={"삭제"} color={"red"} onClick={handleDelete} />
+            <Button text={"수정"} onClick={handleGoEdit} />
+          </div>
+        )}
         <p className="mt-10">
           {new Date(createdAt)?.toLocaleDateString("ko", {
             hour: "2-digit",

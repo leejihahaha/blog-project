@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import New from "./pages/New";
 import Edit from "./pages/Edit";
 import PostsDetail from "./pages/PostsDetail";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 const basename = process.env.PUBLIC_URL;
 const routes = [
@@ -22,7 +23,14 @@ const routes = [
         element: <Home />,
       },
       // { path: "/posts", element: <Post /> },
-      { path: "/new", element: <New /> },
+      {
+        path: "/new",
+        element: (
+          <ProtectedRoute requireAdmin>
+            <New />
+          </ProtectedRoute>
+        ),
+      },
       { path: "/posts/edit/:id", element: <Edit /> },
       { path: "/posts/:id", element: <PostsDetail /> },
     ],

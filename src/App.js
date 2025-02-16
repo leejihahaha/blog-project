@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { DarkModeProvider } from "./context/DarkModeContext";
+import { AuthContextProvider } from "./context/AuthContext";
 
 const queryClient = new QueryClient();
 
@@ -11,8 +12,10 @@ export default function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <DarkModeProvider>
-          <Navbar />
-          <Outlet />
+          <AuthContextProvider>
+            <Navbar />
+            <Outlet />
+          </AuthContextProvider>
         </DarkModeProvider>
       </QueryClientProvider>
     </>

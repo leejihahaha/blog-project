@@ -1,6 +1,13 @@
 import { initializeApp } from "firebase/app";
 import { get, getDatabase, ref, remove, set, update } from "firebase/database";
 import { v4 as uuidv4 } from "uuid";
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut,
+  onAuthStateChanged,
+} from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -10,7 +17,50 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const provider = new GoogleAuthProvider();
 export const database = getDatabase(app);
+
+// 로그인 시 계정 선택없이 바로 로그인 되는 현상 방지
+//인증 동작을 커스터마이징
+provider.setCustomParameters({ prompt: "select_account" });
+// login
+export async function login() {
+  return signInWithPopup(auth, provider)
+    .then((result) => {
+      const user = result.user;
+      // console.log(user);
+      return user;
+    })
+    .catch((error) => console.error(error));
+}
+
+//로그아웃 (명령형함수)
+export async function logout() {
+  return signOut(auth).catch((error) => console.error(error));
+}
+
+//인증 상태 관찰자 설정이 변경되면 전달받은 callback함수 호출해주고 변경된 유저정보도 전달
+//adminUser가 비동기 함수여서 async를 붙여줌
+export function onUserStateChange(callback) {
+  onAuthStateChanged(auth, async (user) => {
+    const updatedUser = user ? await adminUser(user) : null;
+    callback(updatedUser);
+  });
+}
+
+async function adminUser(user) {
+  return get(ref(database, "admins")) //
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const admins = snapshot.val();
+        const isAdmin = admins.includes(user.uid);
+        return { ...user, isAdmin };
+      }
+      // admin이 없으면 user 리턴 (admin이 없는걸로 간주)
+      return user;
+    });
+}
 
 // 쓸때는 set
 export async function addPost(post, title, content, image) {
