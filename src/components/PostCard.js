@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 const PostCard = React.memo(({ post }) => {
   const navigate = useNavigate();
   const { id, image, title, content, createdAt } = post;
+  console.log("렌더링!");
 
   return (
     <li

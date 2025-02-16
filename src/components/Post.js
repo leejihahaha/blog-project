@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getPost } from "../api/firebase";
 import PostCard from "./PostCard";
@@ -36,22 +36,33 @@ export default function Post() {
     queryFn: getPost,
   });
 
-  const getProcessedPostList = () => {
+  // const getProcessedPostList = () => {
+  //   const compare = (a, b) => {
+  //     if (sortType === "latest") {
+  //       return (
+  //         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  //       );
+  //     } else {
+  //       return (
+  //         new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+  //       );
+  //     }
+  //   };
+  //   const copyList = JSON.parse(JSON.stringify(posts));
+  //   const sortedList = copyList.sort(compare);
+  //   return sortedList;
+  // };
+
+  const sortedPosts = useMemo(() => {
     const compare = (a, b) => {
       if (sortType === "latest") {
-        return (
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        );
+        return new Date(b.createdAt) - new Date(a.createdAt);
       } else {
-        return (
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-        );
+        return new Date(a.createdAt) - new Date(b.createdAt);
       }
     };
-    const copyList = JSON.parse(JSON.stringify(posts));
-    const sortedList = copyList.sort(compare);
-    return sortedList;
-  };
+    return [...(posts || [])].sort(compare);
+  }, [posts, sortType]);
 
   return (
     <section className="pt-10 pb-[20px] dark:bg-slate-800">
@@ -70,9 +81,7 @@ export default function Post() {
       </div>
       <ul className="flex flex-col items-center">
         {posts &&
-          getProcessedPostList().map((post) => (
-            <PostCard key={post.id} post={post} />
-          ))}
+          sortedPosts.map((post) => <PostCard key={post.id} post={post} />)}
       </ul>
     </section>
   );
